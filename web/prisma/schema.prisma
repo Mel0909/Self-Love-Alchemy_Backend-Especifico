@@ -101,13 +101,23 @@ model Produto {
   compras     Compra[]    @relation(fields: [compraIDs], references: [id])
 }
 
+enum StatusCompra {
+  pending
+  paid
+  shipped
+  delivered
+  cancelled
+}
+
 model Compra {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  precoTotal  Float       // Exigência: calculado no backend
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  precoTotal  Float        
+  status      StatusCompra @default(pending)
   userId      String   
-  user        User        @relation(fields: [userId], references: [id])
-  produtoIDs  String[]    @db.ObjectId
-  produtos    Produto[]   @relation(fields: [produtoIDs], references: [id])
-  criadoEm    DateTime    @default(now())
+  user        User         @relation(fields: [userId], references: [id])
+  produtoIDs  String[]     @db.ObjectId
+  produtos    Produto[]    @relation(fields: [produtoIDs], references: [id])
+  criadoEm    DateTime     @default(now())
+  
   @@map("compras")
 }

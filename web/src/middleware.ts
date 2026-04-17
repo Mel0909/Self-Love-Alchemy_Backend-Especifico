@@ -1,17 +1,29 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { auth } from "./auth";
 
 export async function middleware(request: NextRequest) {
-  const sessionToken = request.cookies.get("better-auth.session_token");
-
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith("/checkout") || pathname.startsWith("/perfil")) {
-    if (!sessionToken) {
+  const session = await auth.api.getSession({
+    headers: request.headers,
+  });
 
-      const loginUrl = new URL("/login", request.url);
-      return NextResponse.redirect(loginUrl);
+  if (pathname.startsWith("/api/produtos") || pathname.startsWith("/api/compras")) {
+    if (!session) {
+      return NextResponse.json(
+        { success: false, message: "Utilizador não autenticado" },
+        { status: 401 }
+      );
     }
+  }
+
+  const privatePages = ["/checkout", "/perfil"];
+  const isPrivatePage = privatePages.some(page => pathname.startsWith(page));
+
+  if (isPrivatePage && !session) {
+    const loginUrl = new URL("/login", request.url);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();
@@ -19,6 +31,8 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    "/api/produtos/:path*",
+    "/api/compras/:path*",
     "/checkout/:path*",
     "/perfil/:path*",
   ],

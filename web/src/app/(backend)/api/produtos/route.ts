@@ -1,6 +1,48 @@
 import { NextResponse } from "next/server";
-import { ProdutoService } from "@/app/(backend)/services/ProdutoService";
 import { prisma } from "@/lib/prisma";
+import { produtoSchema } from "@/app/(backend)/schemas";
+import { handleError } from "@/utils/handleError";
+import { auth } from "@/auth";
+
+export async function POST(req: Request) {
+  try {
+    const session = await auth.api.getSession({
+      headers: req.headers,
+    });
+
+    if (!session) {
+      return NextResponse.json(
+        { success: false, message: "Usuário não autenticado" },
+        { status: 401 }
+      );
+    }
+
+    const body = await req.json();
+    
+    const validatedData = produtoSchema.parse(body);
+
+    const novoProduto = await prisma.produto.create({
+      data: {
+        nome: validatedData.nome,
+        descricao: validatedData.descricao,
+        preco: validatedData.preco,
+        categoryIDs: validatedData.categoryIDs || [],
+      },
+    });
+
+    return NextResponse.json(
+      { 
+        success: true, 
+        message: "Produto criado com sucesso",
+        data: novoProduto 
+      }, 
+      { status: 201 }
+    );
+
+  } catch (error) {
+    return handleError(error);
+  }
+}
 
 export async function GET() {
   try {
@@ -9,26 +51,12 @@ export async function GET() {
         categorias: true,
       },
     });
-    return NextResponse.json(produtos);
+    
+    return NextResponse.json({
+      success: true,
+      data: produtos
+    });
   } catch (error) {
-    return NextResponse.json({ error: "Erro ao buscar poções" }, { status: 500 });
-  }
-}
-
-export async function POST(req: Request) {
-  try {
-    const body = await req.json();
-
-    if (Array.isArray(body)) {
-      const produtosCriados = await ProdutoService.criarEmLote(body);
-      return NextResponse.json(produtosCriados, { status: 201 });
-    }
-
-    const novoProduto = await ProdutoService.criarEmLote([body]);
-    return NextResponse.json(novoProduto[0], { status: 201 });
-
-  } catch (error: any) {
-    console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return handleError(error);
   }
 }

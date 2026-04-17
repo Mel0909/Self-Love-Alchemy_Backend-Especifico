@@ -24,12 +24,10 @@ export const registerSchema = registerBaseObject
     path: ["confirmPassword"],
 })
 
-// devemos atualizar email e senha apenas via better-auth
-// (para garantir que a verificação de email e o hash da senha sejam feitos corretamente)
 export const patchSchema = registerBaseObject
-  .omit({ email: true, password: true, confirmPassword: true }) // remove esses campos do schema aceito
-  .partial() // manter a semântica de "patch" (todos opcionais)
-  .strict() // ERRO se houver campos extras (ex: email enviado)
+  .omit({ email: true, password: true, confirmPassword: true })
+  .partial()
+  .strict()
   .refine((obj) => Object.keys(obj).length > 0, {
     error: "Pelo menos um campo precisa ser fornecido para atualização",
   });

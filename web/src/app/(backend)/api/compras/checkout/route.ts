@@ -1,30 +1,57 @@
-// src/app/api/compras/checkout/route.ts
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth"; 
-import { headers } from "next/headers";
-import { CompraService } from "../../../services/compra.service";
+import { prisma } from "@/lib/prisma";
+import { checkoutSchema } from "@/app/(backend)/schemas/compra.schema";
+import { handleError } from "@/utils/handleError";
+import { auth } from "@/auth";
 
 export async function POST(req: Request) {
   try {
     const session = await auth.api.getSession({
-      headers: await headers(),
+      headers: req.headers,
     });
 
     if (!session) {
-      return NextResponse.json({ error: "Sessão expirada ou usuário não logado" }, { status: 401 });
+      return NextResponse.json(
+        { success: false, message: "Usuário não autenticado" },
+        { status: 401 }
+      );
     }
 
-    const { itens } = await req.json();
+    const body = await req.json();
+    const { produtoIDs } = checkoutSchema.parse(body);
 
-    if (!itens || itens.length === 0) {
-      return NextResponse.json({ error: "Carrinho vazio" }, { status: 400 });
+    const produtosNoBanco = await prisma.produto.findMany({
+      where: {
+        id: { in: produtoIDs }
+      },
+      select: { preco: true }
+    });
+
+    if (produtosNoBanco.length === 0) {
+      throw new Error("Nenhum produto válido encontrado");
     }
 
-    const novaCompra = await CompraService.efetivarCompra(session.user.id, itens);
+    const precoTotal = produtosNoBanco.reduce((acc, prod) => acc + prod.preco, 0);
 
-    return NextResponse.json(novaCompra, { status: 201 });
-  } catch (error: any) {
-    console.error("Erro ao processar checkout:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const novaCompra = await prisma.compra.create({
+      data: {
+        precoTotal,
+        status: "pending",
+        userId: session.user.id,
+        produtoIDs: produtoIDs,
+      },
+    });
+
+    return NextResponse.json(
+      { 
+        success: true, 
+        message: "Compra realizada com sucesso", 
+        data: novaCompra 
+      }, 
+      { status: 201 }
+    );
+
+  } catch (error) {
+    return handleError(error);
   }
 }
