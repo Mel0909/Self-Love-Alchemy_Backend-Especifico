@@ -1,22 +1,74 @@
 import { NextResponse } from "next/server";
-import { UserService } from "../../../../services/user.service";
+import { prisma } from "@/lib/prisma";
+import { handleError } from "@/utils/handleError";
+import { auth } from "@/auth";
 
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await params;
+    const session = await auth.api.getSession({
+      headers: req.headers,
+    });
 
-    if (!id) {
-      return NextResponse.json({ error: "ID do usuário é obrigatório" }, { status: 400 });
+    if (!session) {
+      return NextResponse.json(
+        { success: false, message: "Usuário não autenticado" },
+        { status: 401 }
+      );
     }
 
-    const stats = await UserService.getUserStats(id);
+    const comprasUser = await prisma.compra.findMany({
+      where: {
+        userId: params.id,
+        status: { in: ["paid", "shipped", "delivered"] } 
+      },
+      include: {
+        produtos: {
+          select: {
+            id: true,
+            nome: true
+          }
+        }
+      }
+    });
 
-    return NextResponse.json(stats, { status: 200 });
-  } catch (error: any) {
-    console.error("Erro ao gerar estatísticas místicas:", error);
-    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 });
+    const totalGasto = comprasUser.reduce((acc, compra) => acc + compra.precoTotal, 0);
+
+    const numeroCompras = comprasUser.length;
+
+    const contagemProdutos: Record<string, { nome: string; qtd: number }> = {};
+
+    comprasUser.forEach((compra) => {
+      compra.produtos.forEach((produto) => {
+        if (!contagemProdutos[produto.id]) {
+          contagemProdutos[produto.id] = { nome: produto.nome, qtd: 0 };
+        }
+        contagemProdutos[produto.id].qtd += 1;
+      });
+    });
+
+    let produtoMaisComprado = "Nenhum produto comprado";
+    let maxQtd = 0;
+
+    Object.values(contagemProdutos).forEach((p) => {
+      if (p.qtd > maxQtd) {
+        maxQtd = p.qtd;
+        produtoMaisComprado = p.nome;
+      }
+    });
+
+    return NextResponse.json({
+      success: true,
+      data: {
+        totalGasto: Number(totalGasto.toFixed(2)),
+        numeroCompras,
+        produtoMaisComprado
+      }
+    });
+
+  } catch (error) {
+    return handleError(error);
   }
 }
