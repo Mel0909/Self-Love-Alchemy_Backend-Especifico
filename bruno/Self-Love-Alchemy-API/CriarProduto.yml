@@ -1,0 +1,62 @@
+info:
+  name: CriarProduto
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: http://localhost:3000/api/produtos
+  body:
+    type: json
+    data: |-
+      [
+        {
+          "nome": "Combo \"Deploy na Sexta à Noite\"",
+          "desc": "O arsenal absoluto para sobreviver ao caos. Contém grimório para documentar gambiarras, velas para proteger o servidor, sais de descarrego e spray de fênix para ressuscitar o sistema.",
+          "preco": "289,90",
+          "imagem": "imgs/produtos/cesta (5).png",
+          "categoria": ["Kits", "Papelaria", "Velas", "Banho", "Cheiros"]
+        },
+        {
+          "nome": "Kit: \"Debugger Espiritual Completo\"",
+          "desc": "Um arsenal místico para qualquer crise. A ametista acalma o desespero, o quartzo rosa te ensina a perdoar o colega que não comentou o código, e as outras pedras servem para canalizar energia enquanto espera o deploy terminar.",
+          "preco": "189,90",
+          "imagem": "imgs/produtos/cristais(2).png",
+          "categoria": ["Kits", "Cristais"]
+        },
+        {
+          "nome": "Kit \"Refatoração de Aura\"",
+          "desc": "Tudo que você precisa para limpar o código legado da sua vida. Use as fitas mágicas para segurar a sanidade e o perfume para manifestar sua evolução de Júnior para Pleno.",
+          "preco": "245,00",
+          "imagem": "imgs/produtos/cesta(2).png",
+          "categoria": ["Kits", "Cheiros"]
+        },
+        {
+          "nome": "Combo \"Apaguei o Banco de Produção\"",
+          "desc": "Kit de emergência máxima. A vela invoca os anjos do backup, o spray ajuda sua carreira a renascer das cinzas e os sais lavam a culpa.",
+          "preco": "210,00",
+          "imagem": "imgs/produtos/cesta(3).png",
+          "categoria": ["Kits", "Velas", "Cheiros", "Banho"]
+        },
+        {
+          "nome": "Kit \"Programação em Par\"",
+          "desc": "Poções em dobro para você e sua dupla não surtarem. Inclui grimório para anotar quem quebrou o código e sais para dividir a frustração.",
+          "preco": "198,50",
+          "imagem": "imgs/produtos/cesta.png",
+          "categoria": ["Kits", "Papelaria", "Banho"]
+        },
+        {
+          "nome": "Kit \"Reset Total de Aura\"",
+          "desc": "O ritual definitivo para quando o servidor cai e a culpa é sua. Use o spray para bloquear mau-olhado de POs estressados, o roller nos pulsos para acalmar a ansiedade de um pull request difícil e os cristais para se reconectar com a paz.",
+          "preco": "195,00",
+          "imagem": "imgs/produtos/cristais.jpg",
+          "categoria": ["Kits", "Cheiros", "Cristais"]
+        }
+      ]
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

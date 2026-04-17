@@ -1,0 +1,51 @@
+.hero {
+    background-image: url('/imgs/fundo-manifeste.jpg');
+    background-repeat: repeat;
+    background-size: 1600px;
+    min-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(10px, 3vh, 40px) clamp(5px, 3vh, 40px);
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border-bottom: 2px solid var(--mystic-gold);
+    width: 100%;
+}
+
+.heroContent h1 {
+    font-family: 'Cinzel Decorative', serif;
+    color: var(--mystic-purple);
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+    font-size: clamp(1.5rem, 5vw, 3rem);
+}
+
+.luckyPhrase {
+    font-family: 'Poppins', sans-serif;
+    color: var(--light-purple);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    margin-bottom: 20px; 
+    min-height: 3em; 
+    display: block;
+    line-height: 1.6;
+}
+
+.btnHero {
+    background: linear-gradient(45deg, var(--mystic-pink), #c695cf);
+    color: white;
+    border: none;
+    padding: clamp(5px, 1.5vh, 10px) clamp(14px, 2vw, 24px);
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(244, 143, 177, 0.4);
+    transition: 0.3s;
+    font-size: clamp(0.78rem, 1.2vw, 0.938rem);
+    display: inline-block;
+}
+
+.btnHero:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(244, 143, 177, 0.6);
+}

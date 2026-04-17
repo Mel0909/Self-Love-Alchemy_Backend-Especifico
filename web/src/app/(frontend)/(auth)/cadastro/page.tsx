@@ -1,4 +1,4 @@
-import NavbarLogo from "@/components/base/nav/NavbarLogo";
+import NavbarLogo from "@/app/(frontend)/components/base/nav/NavbarLogo";
 import CadastroForm from "./_components/CadastroForm";
 
 function Cadastro() {

@@ -1,0 +1,126 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(74, 35, 90, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modalContent {
+    background: #FDF7FF;
+    padding: clamp(20px, 4vw, 40px);
+    border-radius: 30px;
+    position: relative;
+    border: 2px solid #D4AF37;
+    width: clamp(300px, 95%, 500px);
+    animation: scaleIn 0.3s ease;
+}
+
+.modalLoginBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* AJUSTE: Aumentado de 10px para 25px para dar respiro entre imagem, nome e status */
+    gap: 25px; 
+    padding: 20px;
+    font-family: 'Cinzel Decorative', serif;
+    color: #5d2c71;
+    /* AJUSTE: line-height para as frases não ficarem coladas verticalmente */
+    line-height: 1.4; 
+}
+
+.loginImg {
+    /* AJUSTE: Personagem maior (de 200px para 240px) */
+    width: 240px; 
+    height: 240px;
+    border-radius: 50%;
+    object-fit: contain;
+    box-shadow: 0 10px 25px rgba(74, 35, 90, 0.1);
+    /* AJUSTE: Margem extra para afastar do título */
+    margin-bottom: 10px; 
+}
+
+.emailWrapper {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.emailWrapper input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+}
+
+.sufixo {
+    color: #999;
+    font-size: 0.9rem;
+    padding-left: 5px;
+}
+
+.inputMagico {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+}
+
+.loginBtn {
+    width: 100%;
+    background: linear-gradient(135deg, #4A235A, #AB47BC);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: 0.3s;
+    /* AJUSTE: Margem no topo do botão para afastar do texto de status */
+    margin-top: 10px; 
+}
+
+.loginBtn:hover {
+    filter: brightness(1.3);
+}
+
+.toggleLink {
+    margin-top: 15px;
+    cursor: pointer;
+    text-decoration: underline;
+    color: #CE93D8;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.closeModal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #4A235A;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}

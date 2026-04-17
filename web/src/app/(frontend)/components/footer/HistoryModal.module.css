@@ -1,0 +1,68 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(74, 35, 90, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modalContent {
+    background-color: #FDF7FF;
+    padding: 40px;
+    border-radius: 30px;
+    position: relative;
+    border: 2px solid var(--mystic-gold);
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease-out; /* Adicionei a animação aqui */
+}
+
+.closeModal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 35px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--mystic-purple);
+}
+
+.subTitle {
+    color: var(--link-purple);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.historyText {
+    text-align: justify;
+    line-height: 1.8;
+    color: var(--mystic-purple);
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+}
+
+.quote {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.2rem;
+    color: var(--mystic-gold);
+    margin-top: 2.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    padding-top: 1.5rem;
+    font-style: italic;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

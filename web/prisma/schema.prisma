@@ -14,48 +14,8 @@ enum Role {
   SUPER_ADMIN
 }
 
-// modelos de exemplo abaixo (pode deletar)
-model Curso {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  descricao String
-  slug      String @unique
-
-  materiasRelacionadas CursoMateriaRelacionada[]
-}
-
-model CursoMateriaRelacionada {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-
-  curso   Curso  @relation(fields: [cursoId], references: [id])
-  cursoId String
-
-  materia   Materia @relation(fields: [materiaId], references: [id])
-  materiaId String
-
-  @@unique([cursoId, materiaId])
-}
-
-model Materia {
-  id                 String                    @id @default(uuid()) @map("_id")
-  name               String
-  descricao          String
-  cor                String
-  slug               String                    @unique
-  cursosRelacionados CursoMateriaRelacionada[]
-}
-
-model Licao {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId // id base do mongodb, + perfomance
-  name      String
-  descricao String
-  archived  Boolean? @default(false)
-}
-// modelos de exemplo acima (pode deletar)
-
 model User {
-  // nao mexer entre aqui >
-  id            String    @id @map("_id") // o id do user deve ser assim por causa do better auth
+  id            String    @id @map("_id") 
   name          String
   email         String    @unique
   emailVerified Boolean?
@@ -65,13 +25,11 @@ model User {
   sessions      Session[]
   accounts      Account[]
   role          Role      @default(USER)
-  // < e aqui
-
-
+  carrinhoJson  String?   
+  compras       Compra[]  
 
   @@map("user")
 }
-
 
 
 
@@ -121,4 +79,35 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+model Categoria {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  nome        String    @unique
+  
+  productIDs  String[]  @db.ObjectId
+  produtos    Produto[] @relation(fields: [productIDs], references: [id])
+}
+
+model Produto {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  nome        String
+  descricao   String
+  preco       Float
+  imagem      String?
+  categoryIDs String[]    @db.ObjectId
+  categorias  Categoria[] @relation(fields: [categoryIDs], references: [id])
+  compraIDs   String[]    @db.ObjectId
+  compras     Compra[]    @relation(fields: [compraIDs], references: [id])
+}
+
+model Compra {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  precoTotal  Float       // Exigência: calculado no backend
+  userId      String   
+  user        User        @relation(fields: [userId], references: [id])
+  produtoIDs  String[]    @db.ObjectId
+  produtos    Produto[]   @relation(fields: [produtoIDs], references: [id])
+  criadoEm    DateTime    @default(now())
+  @@map("compras")
 }

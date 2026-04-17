@@ -1,0 +1,15 @@
+info:
+  name: DeletarProduto
+  type: http
+  seq: 2
+
+http:
+  method: DELETE
+  url: http://localhost:3000/api/produtos/69b60cfe665b006507fae626
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

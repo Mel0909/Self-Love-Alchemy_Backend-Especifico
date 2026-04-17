@@ -1,0 +1,58 @@
+.searchFilterContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: clamp(20px, 5vh, 40px) 20px;
+    flex-wrap: wrap;
+}
+
+.searchBox {
+    position: relative;
+    width: clamp(250px, 50%, 600px);
+}
+
+.searchBox input {
+    width: 100%;
+    padding: 12px 45px 12px 20px;
+    border-radius: 25px;
+    border: 2px solid var(--mystic-gold);
+    background: #fff;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.searchBox input:focus {
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+.searchIcon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.filterBtn {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.filterBtn:hover {
+    transform: scale(1.1);
+}

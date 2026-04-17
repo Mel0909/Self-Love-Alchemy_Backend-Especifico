@@ -1,5 +1,5 @@
 'use client'
-import { SidebarMenu } from "@/components/ui/sidebar";
+import { SidebarMenu } from "@/app/(frontend)/components/ui/sidebar";
 import { items } from "./items";
 import { usePathname } from "next/navigation";
 import AdminLink from "./AdminLink";

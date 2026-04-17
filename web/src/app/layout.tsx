@@ -1,31 +1,19 @@
-import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
+import { ToastProvider } from "./(frontend)/contexts/ToastContext";
+import { AuthProvider } from "./(frontend)/contexts/AuthContext";
+import { CartProvider } from "./(frontend)/contexts/CartContext";
 import "./globals.css";
-import { ToastProvider } from "@/components/common/ToastProvider";
 
-const rubik = Rubik({
-  variable: "--font-rubik",
-  subsets: ["latin"],
-})
-
-export const metadata: Metadata = {
-  title: "Noctiluz",
-  description: "Plataforma para olimpíadas científicas e reforço escolar",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
-      <body
-        className={`${rubik.variable} antialiased`}
-      >
-        {children}
-
-        <ToastProvider />
+      <body>
+        <ToastProvider>
+          <AuthProvider>
+            <CartProvider>
+              {children}
+            </CartProvider>
+          </AuthProvider>
+        </ToastProvider>
       </body>
     </html>
   );
