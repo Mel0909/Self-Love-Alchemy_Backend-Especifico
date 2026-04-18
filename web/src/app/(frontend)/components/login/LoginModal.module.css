@@ -26,23 +26,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* AJUSTE: Aumentado de 10px para 25px para dar respiro entre imagem, nome e status */
     gap: 25px; 
     padding: 20px;
     font-family: 'Cinzel Decorative', serif;
     color: #5d2c71;
-    /* AJUSTE: line-height para as frases não ficarem coladas verticalmente */
     line-height: 1.4; 
 }
 
 .loginImg {
-    /* AJUSTE: Personagem maior (de 200px para 240px) */
     width: 240px; 
     height: 240px;
     border-radius: 50%;
     object-fit: contain;
     box-shadow: 0 10px 25px rgba(74, 35, 90, 0.1);
-    /* AJUSTE: Margem extra para afastar do título */
     margin-bottom: 10px; 
 }
 
@@ -92,7 +88,6 @@
     font-weight: bold;
     font-size: 1rem;
     transition: 0.3s;
-    /* AJUSTE: Margem no topo do botão para afastar do texto de status */
     margin-top: 10px; 
 }
 
@@ -123,4 +118,30 @@
 @keyframes scaleIn {
     from { transform: scale(0.9); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
+}
+
+.forgotLink {
+    color: #CE93D8;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+    transition: 0.3s;
+}
+
+.forgotLink:hover {
+    color: #AB47BC;
+    text-decoration: underline;
+}
+
+.toggleLink {
+    margin-top: 15px;
+    cursor: pointer;
+    text-decoration: underline;
+    color: #CE93D8;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
 }
