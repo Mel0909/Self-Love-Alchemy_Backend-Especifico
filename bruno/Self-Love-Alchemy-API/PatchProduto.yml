@@ -1,0 +1,30 @@
+info:
+  name: Editar Produto
+  type: http
+  seq: 6
+
+http:
+  method: PATCH
+  url: http://localhost:3000/api/produtos/:id
+  body:
+    type: multipart-form
+    data:
+      - name: nome
+        value: "Vela de Arruda Turbinada"
+        type: text
+      - name: preco
+        value: "35.50"
+        type: text
+      - name: descricao
+        value: "Nova descrição para a vela com limpeza extra pesada."
+        type: text
+      - name: imagem
+        value: ""
+        type: file
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,11 +1,13 @@
 info:
-  name: DeletarProduto
+  name: Deletar Produto
   type: http
-  seq: 2
+  seq: 5
 
 http:
   method: DELETE
-  url: http://localhost:3000/api/produtos/69b60cfe665b006507fae626
+  url: http://localhost:3000/api/produtos/:id
+  body:
+    type: none
   auth: inherit
 
 settings:
