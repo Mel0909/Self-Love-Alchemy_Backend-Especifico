@@ -21,10 +21,7 @@ export default function ProductZoom({ produto, onClose }: any) {
                 {produto.categorias?.[0]?.nome || "Geral"}
               </span>
               <h2>{produto.nome}</h2>
-              <p className={styles.fullDescription}>{produto.descricao}</p> // Mudou de .desc para .descricao
-              <p className={styles.price}>R$ {produto.preco.toFixed(2)}</p>
-              <h2>{produto.nome}</h2>
-              <p className={styles.fullDescription}>{produto.desc}</p>
+              <p className={styles.fullDescription}>{produto.descricao}</p>
             </div>
 
             <div className={styles.modalCompra}>
